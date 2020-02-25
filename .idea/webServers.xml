@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="1208ca7d-6c66-418b-9ea7-4c5c450ddf4b" name="ecos0" url="http://ecos0.umons.ac.be">
+        <fileTransfer host="ecos0.umons.ac.be" port="22" rootFolder="/home/mehdi" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="ecos0">
+    <serverData>
+      <paths name="ecos0">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/myspringbootapp" local="$PROJECT_DIR$" web="/rating/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

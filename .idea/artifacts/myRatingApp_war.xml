@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="myRatingApp:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>myRatingApp</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="ratingwebapp-1.0.1.war">
+      <element id="artifact" artifact-name="myRatingApp:war exploded" />
+    </root>
+  </artifact>
+</component>
