@@ -1,12 +1,13 @@
 package uni.umons.ratingwebapp.domain;
 
-import uni.umons.ratingwebapp.domain.dto.CommentDto;
-import uni.umons.ratingwebapp.domain.dto.GitUserDto;
-import uni.umons.ratingwebapp.domain.dto.RateDto;
+import uni.umons.ratingwebapp.domain.dto.*;
 
 import javax.activation.CommandMap;
+import javax.management.relation.Role;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 public class EntityMappers {
 
@@ -83,5 +84,48 @@ public class EntityMappers {
             rateDtos.add(EntityMappers.RatesToRatsDto(rate));
         }
         return rateDtos;
+    }
+
+    public static UserDto UsertoUserDto(User user)
+    {
+        if(user == null)
+        {
+            return null;
+        }
+        UserDto userDto = new UserDto();
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setUsername(user.getUsername());
+        userDto.setUserId(user.getUserId());
+        userDto.setUserRoles(EntityMappers.RolestoRolesDto(user.getUserRoles()));
+        return userDto;
+    }
+
+    public static UserRoleDto RoletoRoleDto(UserRole role)
+    {
+        if(role==null)
+        {
+            return null;
+        }
+        UserRoleDto roleDto = new UserRoleDto();
+
+        roleDto.setUserid(role.getUserid());
+        roleDto.setUserRoleId(role.getUserRoleId());
+        roleDto.setUserRoleName(role.getUserRoleName());
+        return roleDto;
+    }
+
+    public static List<UserRoleDto> RolestoRolesDto(List<UserRole> roles)
+    {
+        if (roles.size() == 0)
+        {
+            return null;
+        }
+        List<UserRoleDto> roleDtos = new ArrayList<>();
+        for(UserRole role : roles)
+        {
+            roleDtos.add(EntityMappers.RoletoRoleDto(role));
+        }
+        return roleDtos;
     }
 }

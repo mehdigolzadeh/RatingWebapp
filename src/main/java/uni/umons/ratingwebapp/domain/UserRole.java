@@ -1,13 +1,9 @@
 package uni.umons.ratingwebapp.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -21,9 +17,16 @@ public class UserRole implements Serializable {
 	
 	@Column(name = "role_name", nullable = false, unique = true, length = 128)
 	private String userRoleName;
-	
-	@ManyToOne
-	@JoinColumn(name = "user_id")
+
+
+	@Basic(optional = false)
+	@NotNull
+	@Column(name = "user_id")
+	private Long userid;
+
+	@JsonBackReference
+	@JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
 
 	/**
@@ -66,6 +69,15 @@ public class UserRole implements Serializable {
 	 */
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+
+	public Long getUserid() {
+		return userid;
+	}
+
+	public void setUserid(Long userid) {
+		this.userid = userid;
 	}
 
 	/* (non-Javadoc)

@@ -15,7 +15,7 @@ public class UserDto implements BaseDto<uni.umons.ratingwebapp.domain.User>{
 
 	private String lastName;
 
-	private Set<UserRoleDto> userRoles;
+	private List<UserRoleDto> userRoles;
 
 	private List<RateDto> rateDtos;
 
@@ -93,14 +93,14 @@ public class UserDto implements BaseDto<uni.umons.ratingwebapp.domain.User>{
 	/**
 	 * @return the userRoles
 	 */
-	public Set<UserRoleDto> getUserRoles() {
+	public List<UserRoleDto> getUserRoles() {
 		return userRoles;
 	}
 
 	/**
 	 * @param userRoles the userRoles to set
 	 */
-	public void setUserRoles(Set<UserRoleDto> userRoles) {
+	public void setUserRoles(List<UserRoleDto> userRoles) {
 		this.userRoles = userRoles;
 	}
 

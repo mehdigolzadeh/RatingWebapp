@@ -6872,6 +6872,16 @@ table.dataTable thead .sorting:after {
     content: "\f00c";
 }
 
+.errorresult {
+    font-size: 13px;
+    color: white;
+    background: #ff0000;
+}
+.errorresult:after {
+    font-family: 'FontAwesome';
+    content: "\f06a";
+}
+
 @-webkit-keyframes rotating {
     from {
         -webkit-transform: rotate(0deg);

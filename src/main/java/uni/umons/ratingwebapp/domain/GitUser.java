@@ -44,6 +44,7 @@ public class GitUser  implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "gitUser")
 	private List<Comment> comments;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "gitUser", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	private List<Rate> rates;
 

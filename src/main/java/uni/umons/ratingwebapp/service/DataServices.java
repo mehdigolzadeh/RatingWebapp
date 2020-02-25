@@ -8,6 +8,8 @@ import uni.umons.ratingwebapp.domain.EntityMappers;
 import uni.umons.ratingwebapp.domain.GitUser;
 import uni.umons.ratingwebapp.domain.Rate;
 import uni.umons.ratingwebapp.domain.dto.GitUserDto;
+import uni.umons.ratingwebapp.domain.dto.RateDto;
+import uni.umons.ratingwebapp.domain.dto.UserDto;
 import uni.umons.ratingwebapp.repository.*;
 import uni.umons.ratingwebapp.security.SecurityUtil;
 import org.apache.logging.log4j.Logger;
@@ -52,6 +54,15 @@ public class DataServices {
 
 		logger.info("Next GitUser retrieved.");
 		return EntityMappers.GitUsertoGitUserDto(nextGitUser);
+	}
+
+	@Transactional
+	public void RecordNewRate(RateDto ratedto)
+	{
+		logger.info("New rate added");
+		Rate rate = ratedto.toEntity();
+		rate.setRaterid(userRepository.findByUsername(ratedto.getRaterName()).getUserId());
+		rateRepository.save(rate);
 	}
 
 	@Transactional

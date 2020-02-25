@@ -1,5 +1,7 @@
 package uni.umons.ratingwebapp.domain.dto;
 
+import uni.umons.ratingwebapp.domain.Rate;
+
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
@@ -11,11 +13,13 @@ public class RateDto implements BaseDto<uni.umons.ratingwebapp.domain.Rate> {
 
 	private LocalDateTime ratedAt;
 
+	private Long raterId;
+
 	private String raterName;
 
-	private Long rate;
+	private Short rate;
 
-	private Long rateDiffuculty;
+	private Short rateDiffuculty;
 
 	private String description;
 
@@ -35,19 +39,19 @@ public class RateDto implements BaseDto<uni.umons.ratingwebapp.domain.Rate> {
 		this.ratedAt = ratedAt;
 	}
 
-	public Long getRate() {
+	public Short getRate() {
 		return rate;
 	}
 
-	public void setRate(Long rate) {
+	public void setRate(Short rate) {
 		this.rate = rate;
 	}
 
-	public Long getRateDiffuculty() {
+	public Short getRateDiffuculty() {
 		return rateDiffuculty;
 	}
 
-	public void setRateDiffuculty(Long rateDiffuculty) {
+	public void setRateDiffuculty(Short rateDiffuculty) {
 		this.rateDiffuculty = rateDiffuculty;
 	}
 
@@ -75,8 +79,22 @@ public class RateDto implements BaseDto<uni.umons.ratingwebapp.domain.Rate> {
 		this.raterName = raterName;
 	}
 
+	public Long getRaterId() {
+		return raterId;
+	}
+
+	public void setRaterId(Long raterId) {
+		this.raterId = raterId;
+	}
+
 	@Override
 	public uni.umons.ratingwebapp.domain.Rate toEntity() {
-		return null;
+		Rate rate = new Rate();
+		rate.setRate(this.rate);
+		rate.setGitUserId(this.getGitUser());
+		rate.setDescription(this.getDescription());
+		rate.setRatedAt(this.getRatedAt());
+		rate.setRateDiffuculty(this.getRateDiffuculty());
+		return rate;
 	}
 }

@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,6 +17,8 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uni.umons.ratingwebapp.domain.EntityMappers;
+import uni.umons.ratingwebapp.domain.dto.UserDto;
 import uni.umons.ratingwebapp.repository.UserRepository;
 import uni.umons.ratingwebapp.domain.UserRole;
 
@@ -33,7 +37,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 		uni.umons.ratingwebapp.domain.User user = userRepository.findByUsername(username);
 		List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRoles());
 
-		return buildUserForAuthentication(user, authorities);
+		UserDetails principal = buildUserForAuthentication(user, authorities);
+
+		return principal;
 	}
 
 	private User buildUserForAuthentication(uni.umons.ratingwebapp.domain.User user,
@@ -44,7 +50,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 				true, true, true, true, authorities);
 	}
 
-	private List<GrantedAuthority> buildUserAuthority(Set<UserRole> userRoles) {
+	private List<GrantedAuthority> buildUserAuthority(List<UserRole> userRoles) {
 
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(0);
 		for (UserRole userRole : userRoles) {

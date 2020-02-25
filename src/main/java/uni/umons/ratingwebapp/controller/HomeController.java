@@ -1,5 +1,6 @@
 package uni.umons.ratingwebapp.controller;
 
+import uni.umons.ratingwebapp.domain.dto.UserDto;
 import uni.umons.ratingwebapp.security.SecurityUtil;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

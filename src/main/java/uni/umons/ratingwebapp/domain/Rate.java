@@ -2,7 +2,10 @@ package uni.umons.ratingwebapp.domain;
 
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -15,23 +18,34 @@ public class Rate  implements Serializable {
 	@Column(name = "id")
 	private Long rateId;
 
-	@ManyToOne
-	@JoinColumn(name = "gituser")
-	private GitUser gitUser;
+	@Basic(optional = false)
+	@NotNull
+	@Column(name = "gituser")
+	private Long gitUserId;
 
+	@JsonBackReference
+	@JoinColumn(name = "gituser", referencedColumnName = "id", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
+	private GitUser gitUser;
 
 	@Column(name = "rated_at")
 	private LocalDateTime ratedAt;
 
-	@ManyToOne
-	@JoinColumn(name = "rater_id")
+	@Basic(optional = false)
+	@NotNull
+	@Column(name = "rater_id")
+	private Long raterid;
+
+	@JsonBackReference
+	@JoinColumn(name = "rater_id", referencedColumnName = "id", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private User rater;
 
 	@Column(name = "rate")
-	private Long rate;
+	private Short rate;
 
 	@Column(name = "rate_diffuculty")
-	private Long rateDiffuculty;
+	private Short rateDiffuculty;
 
 	@Column(name = "description",length = 255)
 	private String description;
@@ -42,6 +56,14 @@ public class Rate  implements Serializable {
 
 	public void setRateId(Long rateId) {
 		this.rateId = rateId;
+	}
+
+	public Long getGitUserId() {
+		return gitUserId;
+	}
+
+	public void setGitUserId(Long gitUserId) {
+		this.gitUserId = gitUserId;
 	}
 
 	public GitUser getGitUser() {
@@ -60,19 +82,35 @@ public class Rate  implements Serializable {
 		this.ratedAt = ratedAt;
 	}
 
-	public Long getRate() {
+	public Long getRaterid() {
+		return raterid;
+	}
+
+	public void setRaterid(Long raterid) {
+		this.raterid = raterid;
+	}
+
+	public User getRater() {
+		return rater;
+	}
+
+	public void setRater(User rater) {
+		this.rater = rater;
+	}
+
+	public Short getRate() {
 		return rate;
 	}
 
-	public void setRate(Long rate) {
+	public void setRate(Short rate) {
 		this.rate = rate;
 	}
 
-	public Long getRateDiffuculty() {
+	public Short getRateDiffuculty() {
 		return rateDiffuculty;
 	}
 
-	public void setRateDiffuculty(Long rateDiffuculty) {
+	public void setRateDiffuculty(Short rateDiffuculty) {
 		this.rateDiffuculty = rateDiffuculty;
 	}
 
@@ -82,13 +120,5 @@ public class Rate  implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public User getRater() {
-		return rater;
-	}
-
-	public void setRater(User rater) {
-		this.rater = rater;
 	}
 }

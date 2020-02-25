@@ -8,6 +8,16 @@ public class UserRoleDto implements BaseDto<uni.umons.ratingwebapp.domain.UserRo
 	
 	private UserDto user;
 
+	private Long userid;
+
+	public Long getUserid() {
+		return userid;
+	}
+
+	public void setUserid(Long userid) {
+		this.userid = userid;
+	}
+
 	/**
 	 * @return the userRoleId
 	 */

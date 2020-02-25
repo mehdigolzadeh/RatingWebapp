@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -20,6 +21,12 @@ public class Comment implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id" , unique = true, nullable = false)
 	private Long id;
+
+
+	@Basic(optional = false)
+	@NotNull
+	@Column(name = "gituser")
+	private long gitUserId;
 
 	@JsonBackReference
 	@JoinColumn(name = "gituser", referencedColumnName = "id", insertable = false, updatable = false)
@@ -44,6 +51,14 @@ public class Comment implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public long getGitUserId() {
+		return gitUserId;
+	}
+
+	public void setGitUserId(long gitUserId) {
+		this.gitUserId = gitUserId;
 	}
 
 	public GitUser getGitUser() {
@@ -85,5 +100,4 @@ public class Comment implements Serializable {
 	public void setBody(String body) {
 		this.body = body;
 	}
-
 }

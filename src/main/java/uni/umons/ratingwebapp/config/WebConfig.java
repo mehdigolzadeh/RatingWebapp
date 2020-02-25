@@ -14,6 +14,8 @@ import org.springframework.web.servlet.config.annotation.*;
 @PropertySource({"classpath:application.properties", "classpath:database.properties"})
 public class WebConfig implements WebMvcConfigurer {
 
+
+
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
@@ -55,6 +57,7 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addViewController("/error/404.html").setViewName("404");
 		registry.addViewController("/error/505.html").setViewName("505");
 	}
+
 
 }
 

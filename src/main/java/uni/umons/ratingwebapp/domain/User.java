@@ -1,5 +1,7 @@
 package uni.umons.ratingwebapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
@@ -35,9 +37,11 @@ public class User implements Serializable {
 	@Column(name = "last_name", length = 128)
 	private String lastName;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "user", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-	private Set<UserRole> userRoles;
+	private List<UserRole> userRoles;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "rater", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
 	private List<Rate> rates;
 
@@ -115,14 +119,14 @@ public class User implements Serializable {
 	/**
 	 * @return the userRoles
 	 */
-	public Set<UserRole> getUserRoles() {
+	public List<UserRole> getUserRoles() {
 		return userRoles;
 	}
 
 	/**
 	 * @param userRoles the userRoles to set
 	 */
-	public void setUserRoles(Set<UserRole> userRoles) {
+	public void setUserRoles(List<UserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
 

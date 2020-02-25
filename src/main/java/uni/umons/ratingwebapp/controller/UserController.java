@@ -4,14 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uni.umons.ratingwebapp.domain.GitUser;
+import uni.umons.ratingwebapp.domain.User;
 import uni.umons.ratingwebapp.domain.dto.GitUserDto;
+import uni.umons.ratingwebapp.domain.dto.RateDto;
+import uni.umons.ratingwebapp.security.SecurityUtil;
 import uni.umons.ratingwebapp.service.DataServices;
 
+import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -58,4 +65,28 @@ public class UserController {
 		return dataServices.getNextGituser();
 	}
 
+
+	@PreAuthorize("hasRole('User') or hasRole('Administrator')")
+	@RequestMapping(value = "/submitrate" ,method = RequestMethod.POST)
+	public @ResponseBody String submitrate(@RequestParam Long gitUserId,
+										   @RequestParam Short rate,
+										   @RequestParam Short rateDifficulty,
+										   @RequestParam String rateDescription, HttpServletResponse response) {
+		try {
+			RateDto rateDto = new RateDto();
+			rateDto.setGitUser(gitUserId);
+			rateDto.setRate(rate);
+			rateDto.setRateDiffuculty(rateDifficulty);
+			rateDto.setRaterName(SecurityUtil.getCurrentUser().getUsername());
+			rateDto.setDescription(rateDescription);
+			rateDto.setRatedAt(LocalDateTime.now());
+
+			dataServices.RecordNewRate(rateDto);
+			response.setStatus(HttpServletResponse.SC_OK);
+			return "OK";
+		} catch (Exception e) {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			return "NoK";
+		}
+	}
 }
