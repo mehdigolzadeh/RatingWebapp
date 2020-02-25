@@ -22,7 +22,7 @@
 
 
           <section class="content-header">
-            <h2 class="PageTitle">Add Responder</h2>
+            <h2 class="PageTitle">Rate Account</h2>
           </section>
           <!-- Main content -->
           <!-- Main content -->
@@ -36,17 +36,17 @@
                         <div class="ratings rate">
                           <div class="btns btnsrate">
                             <label>
-                              <input name="rate-group" type="radio" value="item">
+                              <input name="rate-group" type="radio" value="1">
                               <span class="btn first">Human</span>
 
                             </label>
                             <label class="lablemidrate">
-                              <input name="rate-group" type="radio" value="other-item">
+                              <input name="rate-group" type="radio" value="2">
                               <span class="btn">Bot</span>
 
                             </label>
                             <label>
-                              <input name="rate-group" type="radio" value="third">
+                              <input name="rate-group" type="radio" value="3">
                               <span class="btn last">I dont Know</span>
 
                             </label>
@@ -58,22 +58,22 @@
                         <div class="ratings ratedifficulty">
                           <div class="btns">
                             <label>
-                              <input name='diff-group' type='radio' value='item'>
+                              <input name='diff-group' type='radio' value='1'>
                               <span class='btn first'>Very easy</span>
                               </input>
                             </label>
                             <label class="lablemid">
-                              <input name='diff-group' type='radio' value='other-item'>
+                              <input name='diff-group' type='radio' value='2'>
                               <span class='btn'>Easy</span>
                               </input>
                             </label>
                             <label class="lablemid">
-                              <input name='diff-group' type='radio' value='third'>
+                              <input name='diff-group' type='radio' value='3'>
                               <span class='btn'>Difficult</span>
                               </input>
                             </label>
                             <label>
-                              <input name='diff-group' type='radio' value='third'>
+                              <input name='diff-group' type='radio' value='4'>
                               <span class='btn last'>Very difficult</span>
                               </input>
                             </label>
@@ -81,17 +81,14 @@
                         </div>
                       </div>
 
-                      <div class="row no-margin">
+                      <div class="row no-margin submitsection">
                         <div class="ratings description">
 
-                          <textarea id="comment" class="form-control commentsec"  rows="2" placeholder="comment" ></textarea>
+                          <textarea id="comment" class="form-control commentsec"  rows="2" placeholder="Please write your comment" ></textarea>
 
 
                         </div>
-                      </div>
-
-                      <div class="row no-margin">
-                        <div class="ratings submit">
+                        <div class="ratings submit" style="margin-top:10px;">
 
                           <button id="button" class="submitbutton"></button>
 
@@ -124,9 +121,61 @@
 
     $(document).ready(function () {
 
+      var ratingdiff = $('.ratedifficulty');
+      ratingdiff.hide();
+      var submitsection = $('.submitsection');
+      submitsection.hide();
 
+      //rate value
+      var ratevalue = "0";
 
-      var svmarr = new Array('', 'DB', 'CRL', 'Proxy');
+      //rate difficulty
+      var ratediff = "0";
+
+      //rate difficulty
+      var ratedesc = "";
+
+      $("input[name='rate-group']").click(function(){
+        ratevalue = $("input[name='rate-group']:checked").val();
+        ratingdiff.slideDown(500);
+        if($("input[value='3']:checked").val())
+        {
+          submitsection.slideDown(500);
+        }else{
+          submitsection.slideUp(500);
+        }
+      });
+      $("input[name='diff-group']").click(function(){
+        ratediff = $("input[name='diff-group']:checked").val();
+        submitsection.slideDown(500);
+      });
+
+      $(".submitbutton").click(function () {
+        ratedesc = $('.commentsec').val();
+        debugger;
+        $.ajax({
+          cache: false,
+          type: "POST",
+          async: false,
+          url: "/user/submitrate",
+          data: {
+            gitUserId: Alldata['gitUserId'],
+            rate: ratevalue,
+            rateDifficulty: ratediff,
+            rateDescription: ratedesc
+          },
+          beforeSend: function(request) {
+            request.setRequestHeader(header, token);
+          },
+          success:function(data){
+
+          },
+          error: function(data){
+
+          }
+        });
+      });
+
       var data;
       var Alldata;
 
@@ -169,14 +218,8 @@
         }
       });
 
-      var ratingdiff = $('.ratedifficulty');
-      ratingdiff.hide();
-      var ratingddes = $('.description');
-      ratingddes.hide();
-      var ratingsubmit = $('.submit');
-      ratingsubmit.hide();
 
-      rate
+
 
       function createTable() {
         var tableDiv = $('.row-content');
