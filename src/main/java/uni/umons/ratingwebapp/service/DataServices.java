@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import uni.umons.ratingwebapp.domain.EntityMappers;
 import uni.umons.ratingwebapp.domain.GitUser;
 import uni.umons.ratingwebapp.domain.Rate;
+import uni.umons.ratingwebapp.domain.User;
 import uni.umons.ratingwebapp.domain.dto.GitUserDto;
 import uni.umons.ratingwebapp.domain.dto.RateDto;
 import uni.umons.ratingwebapp.domain.dto.UserDto;
@@ -40,18 +41,8 @@ public class DataServices {
 
 	@Transactional
 	public GitUserDto getNextGituser() {
-		UserDetails user = SecurityUtil.getCurrentUser();
-		List<Rate> rates = rateRepository.findAllByRater(userRepository.findByUsername(user.getUsername()));
-		GitUser nextGitUser = null;
-		do {
-			if(rates.size() != 0 ){
-				Long nextId = rates.get(rates.size()-1).getRateId();
-				nextGitUser = gituserRepository.findByGitUserId(nextId);
-			}else{
-				nextGitUser = gituserRepository.findByGitUserId(Long.parseLong("1"));
-			}
-		}while (nextGitUser.getRates().size()>2);
-
+		User user = userRepository.findByUsername(SecurityUtil.getCurrentUser().getUsername());
+		GitUser nextGitUser = gituserRepository.findNextUser(user.getUserId());
 		logger.info("Next GitUser retrieved.");
 		return EntityMappers.GitUsertoGitUserDto(nextGitUser);
 	}

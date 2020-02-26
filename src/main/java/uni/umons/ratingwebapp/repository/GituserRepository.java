@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import uni.umons.ratingwebapp.domain.GitUser;
 
 public interface GituserRepository extends BaseDao<GitUser, Long> {
-
+	GitUser findNextUser(Long uid);
 	GitUser findGitUsersByName(String username);
 	GitUser findByGitUserId(Long Id);
 }

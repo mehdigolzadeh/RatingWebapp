@@ -25,94 +25,6 @@ public class GitUserRepositoryImpl extends BaseDaoImpl<GitUser, Long> implements
         return entityManager;
     }
 
-//    public boolean checkUserPassword(String username, String password) {
-//        try {
-//            String result = entityManager
-//                    .createNativeQuery(
-//                            "SELECT FN_USER_IS_OK(:P_USER_NAME , :P_USER_PASSWORD) FROM DUAL"
-//                    )
-//                    .setParameter("P_USER_NAME", username)
-//                    .setParameter("P_USER_PASSWORD", password)
-//                    .getSingleResult().toString();
-//
-//            return result.equals("1");
-//
-//        } catch (Exception ex) {
-//            throw ex;
-//        }
-//    }
-//
-//    public User getByUserName(String username) {
-//        try {
-//            TypedQuery<User> userTypedQuery = entityManager.createNamedQuery("User.findByName", User.class);
-//            userTypedQuery.setParameter("name", username);
-//
-//            return userTypedQuery.getSingleResult();
-//
-//        } catch (Exception ex) {
-//            throw ex;
-//        }
-//    }
-//
-//    public boolean changeUserPassword(Integer userId, String oldPassword, String newPassword) throws Exception {
-//        try {
-//            StoredProcedureQuery query = entityManager
-//                    .createStoredProcedureQuery("PR_CHANGE_PASSWORD")
-//                    .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
-//                    .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
-//                    .registerStoredProcedureParameter(3, String.class, ParameterMode.IN)
-//                    .registerStoredProcedureParameter(4, Integer.class, ParameterMode.OUT)
-//                    .setParameter(1, userId)
-//                    .setParameter(2, oldPassword)
-//                    .setParameter(3, newPassword);
-//
-//            query.execute();
-//            String result = query.getOutputParameterValue(4).toString();
-//
-//            if (result.equals("2"))
-//                throw new OcspCustomException(ServiceExceptionErrorCode.Old_Password_Invalid);
-//            if (result.equals("0"))
-//                throw new Exception("Data base error");
-//            return true;
-//        } catch (Exception ex) {
-//            throw ex;
-//        }
-//    }
-//
-//    public boolean setUserPassword(Integer userId, String password) {
-//        try {
-//            StoredProcedureQuery query = entityManager
-//                    .createStoredProcedureQuery("PR_CHANGE_PASSWORD_PRIOR")
-//                    .registerStoredProcedureParameter(1, Integer.class, ParameterMode.IN)
-//                    .registerStoredProcedureParameter(2, String.class, ParameterMode.IN)
-//                    .registerStoredProcedureParameter(3, Integer.class, ParameterMode.OUT)
-//                    .setParameter(1, userId)
-//                    .setParameter(2, password);
-//
-//            query.execute();
-//            String result = query.getOutputParameterValue(3).toString();
-//
-//            return result.equals("1");
-//
-//        } catch (Exception ex) {
-//            return false;
-//        }
-//    }
-//
-//    public String getUserPassword(String userName) {
-//        try {
-//            return entityManager
-//                    .createNativeQuery(
-//                            "SELECT Fn_user_ret_password(:P_USER_NAME) FROM DUAL"
-//                    )
-//                    .setParameter("P_USER_NAME", userName)
-//                    .getSingleResult().toString();
-//
-//        } catch (Exception ex) {
-//            return null;
-//        }
-//    }
-
     @Override
     public GitUser findGitUsersByName(String username) {
         try {
@@ -134,6 +46,22 @@ public class GitUserRepositoryImpl extends BaseDaoImpl<GitUser, Long> implements
 
             return userTypedQuery.getSingleResult();
 
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    @Override
+    public GitUser findNextUser(Long uid) {
+        try {
+            String res = entityManager
+                    .createNativeQuery(
+                            "SELECT id FROM tbl_github_user WHERE id NOT IN (SELECT gituser FROM tbl_rate GROUP BY gituser HAVING COUNT(*) > 1 UNION ALL SELECT gituser FROM tbl_rate WHERE rater_id = :uid) ORDER BY id LIMIT 1"
+                    )
+                    .setParameter("uid", uid)
+                    .getSingleResult().toString();
+
+            return findByGitUserId(Long.parseLong(res));
         } catch (Exception ex) {
             throw ex;
         }

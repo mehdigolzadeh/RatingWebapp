@@ -54,4 +54,6 @@ public class CommentRepositoryImpl extends BaseDaoImpl<Comment, Long> implements
             throw ex;
         }
     }
+
+
 }
