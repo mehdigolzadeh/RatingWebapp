@@ -90,4 +90,10 @@ public class DataServices {
 		return gituserRepository.findGitUsersByName(user);
 	}
 
+	@Transactional
+	public List<RateDto> getUserRates(){
+		logger.info("load user rates");
+		return EntityMappers.RatesToRatesDto(rateRepository.findAllByRater(userRepository.findByUsername(SecurityUtil.getCurrentUser().getUsername())));
+	}
+
 }

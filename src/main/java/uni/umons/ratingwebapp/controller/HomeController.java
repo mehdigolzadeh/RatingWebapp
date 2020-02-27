@@ -27,10 +27,4 @@ public class HomeController {
 		return "/401";
 	}
 
-
-	@RequestMapping("/access-denied")
-	public String accessDenied() {
-		return "/401";
-	}
-
 }

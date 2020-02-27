@@ -1,4 +1,4 @@
-<div layout:fragment="header">
+<div layout:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" sec:authorize="isAuthenticated()">
       <span class="sr-only">Toggle navigation</span>
@@ -6,7 +6,7 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="/home">Software Engineering Lab - UMONS</a>
+    <a class="navbar-brand" href="../home">Software Engineering Lab - UMONS</a>
   </div>
   <!-- /.navbar-header -->
   

@@ -2,6 +2,7 @@ package uni.umons.ratingwebapp.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Qualifier("accessDeniedHandler")
 public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
 
     private static Logger log = LoggerFactory.getLogger(LoggingAccessDeniedHandler.class);
@@ -31,6 +33,6 @@ public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
             log.debug(ex.getStackTrace().toString());
         }
 
-        response.sendRedirect(request.getContextPath() + "/access-denied");
+        response.sendRedirect(request.getContextPath() + "/error/401");
     }
 }

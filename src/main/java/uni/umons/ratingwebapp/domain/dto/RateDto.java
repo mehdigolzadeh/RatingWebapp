@@ -1,5 +1,6 @@
 package uni.umons.ratingwebapp.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import uni.umons.ratingwebapp.domain.Rate;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,11 @@ public class RateDto implements BaseDto<uni.umons.ratingwebapp.domain.Rate> {
 
 	private Long gitUser;
 
+	private String gitUserName;
+
+	private String gitUserRepo;
+
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime ratedAt;
 
 	private Long raterId;
@@ -85,6 +91,22 @@ public class RateDto implements BaseDto<uni.umons.ratingwebapp.domain.Rate> {
 
 	public void setRaterId(Long raterId) {
 		this.raterId = raterId;
+	}
+
+	public String getGitUserName() {
+		return gitUserName;
+	}
+
+	public void setGitUserName(String gitUserName) {
+		this.gitUserName = gitUserName;
+	}
+
+	public String getGitUserRepo() {
+		return gitUserRepo;
+	}
+
+	public void setGitUserRepo(String gitUserRepo) {
+		this.gitUserRepo = gitUserRepo;
 	}
 
 	@Override

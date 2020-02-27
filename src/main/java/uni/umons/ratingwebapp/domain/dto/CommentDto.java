@@ -1,5 +1,7 @@
 package uni.umons.ratingwebapp.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
@@ -9,6 +11,8 @@ public class CommentDto implements BaseDto<uni.umons.ratingwebapp.domain.Comment
 	private String author;
 	private String issueType;
 	private String issueNumber;
+
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createdAt;
 	private String body;
 

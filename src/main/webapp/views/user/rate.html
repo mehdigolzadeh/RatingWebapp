@@ -172,7 +172,7 @@
             debugger;
             if(data.toString().indexOf("/sign-in-process.html")>=0)
             {
-              window.location.href = '/signin';
+              window.location.href = '../signin';
             }else if (data.toString() == "OK")
             {
               $( ".submitbutton" ).removeClass( "onclic" );
@@ -195,13 +195,6 @@
         });
       }
 
-
-      // function validate() {
-      //   setTimeout(function() {
-      //
-      //   }, 2250 );
-      // }
-
       var data;
       var Alldata;
       function loadNewUser() {
@@ -223,6 +216,10 @@
           success: function (res) {
             data = res;
             Alldata = data;
+            if(data.toString().indexOf("/sign-in-process.html")>=0)
+            {
+              window.location.href = '../signin';
+            }
             createTable();
           },
           Error: function (e) {
@@ -246,7 +243,7 @@
           }
         }else{
           for (var i = 0; i < 20 ; i++) {
-            createItem(i, data[i].id,data[i]["body"],tableDiv)
+            createItem(i, data[i].id,escape(data[i]["body"]),tableDiv)
           }
           var foot = $('.loadmoresec');
           var tbl = $('<div />').addClass('col-lg-12').addClass('col-xs-12').addClass('col-xl-12').addClass('connectedLoadMore').appendTo(foot);
@@ -274,25 +271,8 @@
 
         var prbbox = $('<div />').addClass('entity-prop-box').addClass('bg-white').appendTo(tbl);
         var inner = $('<div />').addClass('inner').appendTo(prbbox);
-        // var footer = ($('<div />')
-        //         .addClass('entity-prop-box-footer-box')
-        //         .html((perm?'<a href="'+path+'/authorities/editAuthorityGroup/'+data[i].group.id+'" class="entity-prop-box-footer btn-cagroup pull-left" style="color:#a76c00">' + data[i]['group']['name']+'</a>':
-        //                 '<div class="entity-prop-box-footer btn-cagroup pull-left" style="color:#a76c00">'+data[i]['group']['name']+'</div>')+'<a href="#" class="entity-prop-box-footer delete-btn">Delete  <i class="fa fa-trash-o"></i></a><a href= "#" class="entity-prop-box-footer edit-btn"> Edit <i class="fa fa-pencil-square-o" ></i></a><a href= "#" class="entity-prop-box-footer detail-btn"> Detail <i class="fa fa-info-circle" ></i></a><a href= "#" class="entity-prop-box-footer revoke-btn"> Revoke <i class="fa fa-close" ></i></a>')).appendTo(prbbox);
-        // if(data[i].responder == null)
-        // {
-        //   footer.css('background',"#ffebcd");
-        // }
-        // if(data[i].active !== true)
-        // {
-        //   footer.css('background','#dedce8');
-        // }
-        // if(data[i].status == 1)
-        // {
-        //   footer.css('background','#ffdede');
-        //   footer.find($('.revoke-btn')).remove();
-        //   footer.find($('.edit-btn')).remove();
-        // }
-        inner.append($('<p />').html(text));
+
+        inner.append($('<p />').html($.parseHTML( unescape(text) )));
         tbl.hide().delay(i * (20 - (i < 20 ? i : 19))).fadeIn(500).appendTo(tbl);
       }
 

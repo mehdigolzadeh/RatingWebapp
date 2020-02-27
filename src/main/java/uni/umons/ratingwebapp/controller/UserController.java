@@ -92,4 +92,13 @@ public class UserController {
 			return "NOK,"+e.getMessage();
 		}
 	}
+
+	@PreAuthorize("hasRole('User') or hasRole('Administrator')")
+	@RequestMapping(value = "getUserRates" , method = RequestMethod.POST
+			,produces = "application/json")
+	public @ResponseBody
+	List<RateDto> GivemeUserRates()
+	{
+		return dataServices.getUserRates();
+	}
 }

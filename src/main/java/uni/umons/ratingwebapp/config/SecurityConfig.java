@@ -12,8 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import uni.umons.ratingwebapp.security.LoggingAccessDeniedHandler;
 
 import javax.servlet.DispatcherType;
@@ -32,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserDetailsService customUserDetailsService;
 
 	@Autowired
+	@Qualifier("accessDeniedHandler")
 	private LoggingAccessDeniedHandler accessDeniedHandler;
 
 	@Override
@@ -47,8 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		httpSecurity.authorizeRequests()
 						.antMatchers("/signin").anonymous()
-           				//.antMatchers("/admin/**").access("hasRole('Administrator')")
-						//.antMatchers("/user/**").access("hasRole('User') or hasRole('Administrator')")
 						.anyRequest()
 						.authenticated()
 						.and()
@@ -64,15 +61,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						.logoutSuccessUrl("/signin?logout");
 
 
-		httpSecurity.exceptionHandling().accessDeniedPage("/401.html");
+		httpSecurity.exceptionHandling().accessDeniedPage("/error/401");
 		httpSecurity.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 		httpSecurity.sessionManagement().invalidSessionUrl("/signin");
-		
 	}
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
 		auth.userDetailsService(customUserDetailsService);
 	}
 	
@@ -85,11 +80,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        registration.setDispatcherTypes(EnumSet.allOf(DispatcherType.class));
 	        return registration;
 	}
-
-//	@Bean
-//	public PasswordEncoder passwordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	}
-
-
 }

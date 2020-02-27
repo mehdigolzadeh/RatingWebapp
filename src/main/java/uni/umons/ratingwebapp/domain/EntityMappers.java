@@ -55,7 +55,7 @@ public class EntityMappers {
         return commentDtos;
     }
 
-    public static RateDto RatesToRatsDto(Rate rate)
+    public static RateDto RateToRateDto(Rate rate)
     {
         if(rate == null)
         {
@@ -65,6 +65,8 @@ public class EntityMappers {
         rateDto.setRateId(rate.getRateId());
         rateDto.setRatedAt(rate.getRatedAt());
         rateDto.setRate(rate.getRate());
+        rateDto.setGitUserName(rate.getGitUser().getName());
+        rateDto.setGitUserRepo(rate.getGitUser().getRepository());
         rateDto.setDescription(rate.getDescription());
         rateDto.setRaterName(rate.getRater().getUsername());
         rateDto.setRateDiffuculty(rate.getRateDiffuculty());
@@ -81,7 +83,7 @@ public class EntityMappers {
         List<RateDto> rateDtos = new ArrayList<>();
         for(Rate rate : rates)
         {
-            rateDtos.add(EntityMappers.RatesToRatsDto(rate));
+            rateDtos.add(EntityMappers.RateToRateDto(rate));
         }
         return rateDtos;
     }
