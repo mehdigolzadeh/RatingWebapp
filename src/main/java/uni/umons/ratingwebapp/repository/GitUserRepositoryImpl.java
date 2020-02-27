@@ -7,6 +7,7 @@ import uni.umons.ratingwebapp.domain.GitUser;
 import javax.persistence.*;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import uni.umons.ratingwebapp.domain.Rate;
 
 @Repository
 @Qualifier(value = "gituserRepository")
@@ -54,14 +55,14 @@ public class GitUserRepositoryImpl extends BaseDaoImpl<GitUser, Long> implements
     @Override
     public GitUser findNextUser(Long uid) {
         try {
-            String res = entityManager
+            Long nextAccount = Long.parseLong(entityManager
                     .createNativeQuery(
                             "SELECT id FROM tbl_github_user WHERE id NOT IN (SELECT gituser FROM tbl_rate GROUP BY gituser HAVING COUNT(*) > 1 UNION ALL SELECT gituser FROM tbl_rate WHERE rater_id = :uid) ORDER BY id LIMIT 1"
                     )
                     .setParameter("uid", uid)
-                    .getSingleResult().toString();
+                    .getSingleResult().toString());
 
-            return findByGitUserId(Long.parseLong(res));
+            return findByGitUserId(nextAccount);
         } catch (Exception ex) {
             throw ex;
         }

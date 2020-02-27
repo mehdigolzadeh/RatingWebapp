@@ -1,20 +1,24 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
-  <title>Spring Boot and Thymeleaf - Thymeleaf Layout Dialect</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
-      th:src="@{/webjars/jquery/1.11.3/jquery.min.js}" th:unless="isTemplate"></script>
-  <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css" 
-        th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}" rel="stylesheet" media="screen" th:unless="isTemplate" />
-  <link rel="stylesheet" type="text/css" media="screen" href="../../css/common.css" th:href="@{/css/common.css}" th:unless="isTemplate" />
+  <title>Login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" th:src="@{/webjars/jquery/1.11.3/jquery.min.js}" th:unless="isTemplate"></script>
+    <script src="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/3.3.4/js/bootstrap.min.js}" th:unless="isTemplate"></script>
+    <script src="../../js/ratingapp.js" th:src="@{/js/ratingapp.js}" th:unless="isTemplate"></script>
+    <script src="../../resources/metisMenu/dist/metisMenu.min.js"  th:src="@{/resources/metisMenu/dist/metisMenu.min.js}" th:unless="isTemplate"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="../../css/common.css" th:href="@{/css/common.css}" th:unless="isTemplate" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../../css/ratingapp.css" th:href="@{/css/ratingapp.css}" th:unless="isTemplate" />
+    <link rel="stylesheet" type="text/css" media="screen" href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}" th:unless="isTemplate" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../../resources/metisMenu/dist/metisMenu.css" th:href="@{/resources/metisMenu/dist/metisMenu.min.css}" th:unless="isTemplate" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../../resources/font-awesome/css/font-awesome.min.css" th:href="@{/resources/font-awesome/css/font-awesome.min.css}" th:unless="isTemplate" />
 </head>
 <body class="skin-blue sidebar-mini fixed sidebar-mini-expand-feature">
 <div id="wrapper">
 
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-      <div class="navbar-header" th:replace="fragments/header :: div"/>
+      <div th:replace="fragments/header :: div"/>
       <!-- /.navbar-header -->
     </nav>
 

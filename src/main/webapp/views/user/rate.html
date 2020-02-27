@@ -22,7 +22,7 @@
 
 
           <section class="content-header">
-            <h2 class="PageTitle">Rate Account</h2>
+            <h2 class="PageTitle">Rate the account</h2>
           </section>
           <!-- Main content -->
           <!-- Main content -->
@@ -152,19 +152,16 @@
         submitsection.slideDown(500);
       });
 
-      $(".submitbutton").click(function () {
-        if($(".submitbutton").hasClass("clicked"))
-        {
-          return;
-        }
+
+      function submitaction() {
+        $('.submitbutton').unbind('click');
         ratedesc = $('.commentsec').val();
-        $(".submitbutton").addClass( "clicked");
         $(".submitbutton").addClass( "onclic");
         $.ajax({
           cache: false,
           type: "POST",
           async: false,
-          url: "/user/submitrate",
+          url: "../user/submitrate",
           data: {
             gitUserId: Alldata['gitUserId'],
             rate: ratevalue,
@@ -173,17 +170,30 @@
           },
           success:function(data){
             debugger;
-            $( ".submitbutton" ).removeClass( "onclic" );
-            $( ".submitbutton" ).addClass( "validate",250, );
-            setTimeout(loadNewUser, 2250 );
+            if(data.toString().indexOf("/sign-in-process.html")>=0)
+            {
+              window.location.href = '/signin';
+            }else if (data.toString() == "OK")
+            {
+              $( ".submitbutton" ).removeClass( "onclic" );
+              $( ".submitbutton" ).addClass( "validate");
+              setTimeout(
+                      loadNewUser,1000
+              )
+            }else if (data.toString() == "NOK")
+            {
+              $( ".submitbutton" ).removeClass( "onclic" );
+              $( ".submitbutton" ).addClass( "errorresult",);
+              $( ".submitbutton" ).html(data.splitText('NOK,')[1])
+            }
           },
           error: function(data){
-            $( ".submitbutton" ).removeClass( "validate" );
+            $( ".submitbutton" ).removeClass( "onclic" );
             $( ".submitbutton" ).addClass( "errorresult",);
 
           }
         });
-      });
+      }
 
 
       // function validate() {
@@ -195,8 +205,10 @@
       var data;
       var Alldata;
       function loadNewUser() {
-        $( ".submitbutton" ).removeClass( "clicked" );
+        $('.submitbutton').click(submitaction);
+        $( ".submitbutton" ).removeClass( "onclic" );
         $( ".submitbutton" ).removeClass( "validate" );
+        $( ".submitbutton" ).removeClass( "errorresult" );
         $('.loadmoresec').empty();
         submitsection.hide();
         ratingdiff.hide();
@@ -207,9 +219,8 @@
           cache: false,
           type: "POST",
           async: false,
-          url: "/user/givemeNextGituser",
+          url: "../user/givemeNextGituser",
           success: function (res) {
-            debugger;
             data = res;
             Alldata = data;
             createTable();
@@ -247,7 +258,7 @@
             e.preventDefault();
 
             for (var i = 20; i < data.length ; i++) {
-              createItem(i, data[i].id,data[i]["body"],tableDiv)
+              createItem(i, data[i].id,escape(data[i]["body"]),tableDiv)
             }
 
             $('.connectedLoadMore').fadeOut(500);

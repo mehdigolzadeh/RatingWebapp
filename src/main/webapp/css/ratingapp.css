@@ -5927,7 +5927,7 @@ table.text-center th {
 .PageTitle {
     font: 300 20px/1.5 Lato, "Helvetica Neue", Helvetica, arial, sans-serif;
     font-size: 30px;
-    margin: 0px;
+    margin: 0px 0px 15px;
 }
 
 /* btn info*/

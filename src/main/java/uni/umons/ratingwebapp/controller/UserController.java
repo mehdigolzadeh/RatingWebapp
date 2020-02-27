@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import uni.umons.ratingwebapp.domain.GitUser;
+import uni.umons.ratingwebapp.domain.Rate;
 import uni.umons.ratingwebapp.domain.User;
 import uni.umons.ratingwebapp.domain.dto.GitUserDto;
 import uni.umons.ratingwebapp.domain.dto.RateDto;
@@ -73,20 +74,22 @@ public class UserController {
 										   @RequestParam Short rateDifficulty,
 										   @RequestParam String rateDescription, HttpServletResponse response) {
 		try {
-			RateDto rateDto = new RateDto();
-			rateDto.setGitUser(gitUserId);
-			rateDto.setRate(rate);
-			rateDto.setRateDiffuculty(rateDifficulty);
-			rateDto.setRaterName(SecurityUtil.getCurrentUser().getUsername());
-			rateDto.setDescription(rateDescription);
-			rateDto.setRatedAt(LocalDateTime.now());
-
-			dataServices.RecordNewRate(rateDto);
+			Rate raterecord = dataServices.getLastIncompleteRate();
+			if(gitUserId != raterecord.getGitUserId())
+			{
+				response.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
+				return "User has modified data manually";
+			}
+			raterecord.setRate(rate);
+			raterecord.setRateDiffuculty(rateDifficulty);
+			raterecord.setDescription(rateDescription);
+			raterecord.setRatedAt(LocalDateTime.now());
+			dataServices.UpdateRate(raterecord);
 			response.setStatus(HttpServletResponse.SC_OK);
 			return "OK";
 		} catch (Exception e) {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			return "NoK";
+			return "NOK,"+e.getMessage();
 		}
 	}
 }

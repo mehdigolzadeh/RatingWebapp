@@ -40,9 +40,30 @@ public class DataServices {
 	private GituserRepository gituserRepository;
 
 	@Transactional
+	public User getCurrentUserDetail(){
+		return userRepository.findByUsername(SecurityUtil.getCurrentUser().getUsername());
+	}
+
+	@Transactional
+	public Rate getLastIncompleteRate(){
+		return rateRepository.findRateByRaterAndRate(getCurrentUserDetail(),Short.parseShort("0"));
+	}
+
+	@Transactional
 	public GitUserDto getNextGituser() {
-		User user = userRepository.findByUsername(SecurityUtil.getCurrentUser().getUsername());
-		GitUser nextGitUser = gituserRepository.findNextUser(user.getUserId());
+		User user = getCurrentUserDetail();
+		GitUser nextGitUser = null;
+		Rate rate = rateRepository.findRateByRaterAndRate(user,Short.parseShort("0"));
+		if(rate != null){
+			nextGitUser = gituserRepository.findByGitUserId(rate.getGitUserId());
+		}else {
+			nextGitUser = gituserRepository.findNextUser(user.getUserId());
+			rate = new Rate();
+			rate.setGitUserId(nextGitUser.getGitUserId());
+			rate.setRaterid(user.getUserId());
+			rate.setRate(Short.parseShort("0"));
+			rateRepository.save(rate);
+		}
 		logger.info("Next GitUser retrieved.");
 		return EntityMappers.GitUsertoGitUserDto(nextGitUser);
 	}
@@ -53,6 +74,13 @@ public class DataServices {
 		logger.info("New rate added");
 		Rate rate = ratedto.toEntity();
 		rate.setRaterid(userRepository.findByUsername(ratedto.getRaterName()).getUserId());
+		rateRepository.save(rate);
+	}
+
+	@Transactional
+	public void UpdateRate(Rate rate)
+	{
+		logger.info("Rate updated.");
 		rateRepository.save(rate);
 	}
 

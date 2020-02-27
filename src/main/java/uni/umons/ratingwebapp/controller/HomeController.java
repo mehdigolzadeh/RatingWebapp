@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
 
+	@RequestMapping("/")
+	public String hom() {
+		return "redirect:/home";
+	}
+
 	@RequestMapping("/home")
 	public String home() {
 		UserDetails userDetails = SecurityUtil.getCurrentUser();

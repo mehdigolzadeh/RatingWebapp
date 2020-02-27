@@ -14,4 +14,5 @@ import java.util.List;
 public interface RateRepository extends CrudRepository<Rate, Long> {
     public List<Rate> findAllByRater(User rater);
     public List<Rate> findAllByGitUser(GitUser gitUser);
+    public Rate findRateByRaterAndRate(User user,Short rate);
 }
