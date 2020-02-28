@@ -38,7 +38,7 @@ public class UserController {
 	}
 
 	@PreAuthorize("hasRole('User') or hasRole('Administrator')")
-	@RequestMapping(value = "rate" , method = RequestMethod.GET)
+	@RequestMapping(value = "ratenext" , method = RequestMethod.GET)
 	public String rate() {
 		
 		return "user/rate";

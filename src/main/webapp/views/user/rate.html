@@ -7,10 +7,8 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" th:src="@{/webjars/jquery/1.11.3/jquery.min.js}"></script>
   <script src="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/3.3.4/js/bootstrap.min.js}"></script>
   <script src="../../js/ratingapp.js" th:src="@{/js/ratingapp.js}"></script>
-  <script src="../../resources/metisMenu/dist/metisMenu.min.js" th:src="@{/resources/metisMenu/dist/metisMenu.min.js}"></script>
   <link rel="stylesheet" type="text/css" media="screen" href="../../css/common.css" th:href="@{/css/common.css}" />
   <link rel="stylesheet" type="text/css" media="screen" href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}" />
-  <link rel="stylesheet" type="text/css" media="screen" href="../../resources/metisMenu/dist/metisMenu.css" th:href="@{/resources/metisMenu/dist/metisMenu.min.css}" />
   <link rel="stylesheet" type="text/css" media="screen" href="../../resources/font-awesome/css/font-awesome.min.css" th:href="@{/resources/font-awesome/css/font-awesome.min.css}" />
   <link rel="stylesheet" type="text/css" media="screen" href="../../css/ratingapp.css" th:href="@{/css/ratingapp.css}" />
 
@@ -37,17 +35,17 @@
                           <div class="btns btnsrate">
                             <label>
                               <input name="rate-group" type="radio" value="1">
-                              <span class="btn first">Human</span>
+                              <span class="btn first" style="padding: 0px;">Human</span>
 
                             </label>
                             <label class="lablemidrate">
                               <input name="rate-group" type="radio" value="2">
-                              <span class="btn">Bot</span>
+                              <span class="btn" style="padding: 0px;">Bot</span>
 
                             </label>
                             <label>
                               <input name="rate-group" type="radio" value="3">
-                              <span class="btn last">I dont Know</span>
+                              <span class="btn last" style="padding: 0px;">I dont Know</span>
 
                             </label>
                           </div>
@@ -59,22 +57,22 @@
                           <div class="btns">
                             <label>
                               <input name='diff-group' type='radio' value='1'>
-                              <span class='btn first'>Very easy</span>
+                              <span class='btn rdif first' style="padding: 0px;">Very easy</span>
                               </input>
                             </label>
                             <label class="lablemid">
                               <input name='diff-group' type='radio' value='2'>
-                              <span class='btn'>Easy</span>
+                              <span class='btn rdif' style="padding: 0px;">Easy</span>
                               </input>
                             </label>
                             <label class="lablemid">
                               <input name='diff-group' type='radio' value='3'>
-                              <span class='btn'>Difficult</span>
+                              <span class='btn rdif' style="padding: 0px;">Difficult</span>
                               </input>
                             </label>
                             <label>
                               <input name='diff-group' type='radio' value='4'>
-                              <span class='btn last'>Very difficult</span>
+                              <span class='btn rdif last' style="padding: 0px;">Very difficult</span>
                               </input>
                             </label>
                           </div>
