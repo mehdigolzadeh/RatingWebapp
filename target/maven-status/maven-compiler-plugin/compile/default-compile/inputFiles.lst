@@ -1,12 +1,16 @@
+/Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/domain/dto/UserStatisticDto.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/domain/Repository.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/domain/dto/GitUserDto.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/repository/RateRepository.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/repository/UserRepository.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/domain/UserRole.java
+/Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/domain/Stats.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/controller/UserController.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/domain/EntityMappers.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/config/WebConfig.java
+/Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/domain/BotStats.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/service/DataServices.java
+/Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/domain/dto/HomePageStats.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/config/SecurityConfig.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/repository/GitUserRepositoryImpl.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/config/RepositoryConfig.java
@@ -16,6 +20,7 @@
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/domain/User.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/repository/UserRoleRepository.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/domain/dto/RateDto.java
+/Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/domain/TimeSeriesStats.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/domain/Comment.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/security/SecurityUtil.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/repository/CommentRepositoryImpl.java
@@ -31,4 +36,5 @@
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/controller/AdminController.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/repository/CommentRepository.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/controller/HomeController.java
+/Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/security/CustomErrorPageRegisterar.java
 /Users/admin/personal/interrate/myRatingApp/src/main/java/uni/umons/ratingwebapp/repository/BaseDao.java

@@ -48,16 +48,27 @@ public class EntityMappers {
             return null;
         }
         List<CommentDto> commentDtos = new ArrayList<>();
+        List<CommentDto> emptyComments = new ArrayList<>();
         for(Comment comment : comments)
         {
-            commentDtos.add(EntityMappers.CommentToCommentDto(comment));
+            if( comment.getBody().trim().isEmpty())
+            {
+                emptyComments.add(EntityMappers.CommentToCommentDto(comment));
+            }else {
+                commentDtos.add(EntityMappers.CommentToCommentDto(comment));
+            }
         }
+        commentDtos.addAll(emptyComments);
         return commentDtos;
     }
 
     public static RateDto RateToRateDto(Rate rate)
     {
         if(rate == null)
+        {
+            return null;
+        }
+        if(rate.getRate() == 0)
         {
             return null;
         }
@@ -83,7 +94,8 @@ public class EntityMappers {
         List<RateDto> rateDtos = new ArrayList<>();
         for(Rate rate : rates)
         {
-            rateDtos.add(EntityMappers.RateToRateDto(rate));
+            if(EntityMappers.RateToRateDto(rate) != null)
+                rateDtos.add(EntityMappers.RateToRateDto(rate));
         }
         return rateDtos;
     }

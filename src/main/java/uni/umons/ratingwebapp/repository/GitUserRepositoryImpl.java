@@ -1,5 +1,6 @@
 package uni.umons.ratingwebapp.repository;
 
+import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import uni.umons.ratingwebapp.domain.GitUser;
@@ -8,6 +9,9 @@ import javax.persistence.*;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import uni.umons.ratingwebapp.domain.Rate;
+import uni.umons.ratingwebapp.domain.Stats;
+
+import java.util.List;
 
 @Repository
 @Qualifier(value = "gituserRepository")
@@ -67,4 +71,17 @@ public class GitUserRepositoryImpl extends BaseDaoImpl<GitUser, Long> implements
             throw ex;
         }
     }
+
+//    @Override
+//    public List<Stats> getStat() {
+//        try {
+//             = entityManager.createNativeQuery("GitUser.getStats",GitUser.class);
+////            TypedQuery<GitUser> userTypedQuery = entityManager.createNamedQuery("GitUser.getStats");
+//
+//            return userTypedQuery.getSingleResult();
+//
+//        } catch (Exception ex) {
+//            throw ex;
+//        }
+//    }
 }

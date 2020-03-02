@@ -22,7 +22,7 @@ public class HomeController {
 		if(userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_User"))){
 			return "redirect:/user/home";
 		}else if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_Administrator"))) {
-			return "redirect:/admin/home";
+			return "redirect:/user/home";
 		}
 		return "/401";
 	}

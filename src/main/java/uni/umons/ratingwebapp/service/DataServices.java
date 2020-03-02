@@ -4,19 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uni.umons.ratingwebapp.domain.EntityMappers;
-import uni.umons.ratingwebapp.domain.GitUser;
-import uni.umons.ratingwebapp.domain.Rate;
-import uni.umons.ratingwebapp.domain.User;
-import uni.umons.ratingwebapp.domain.dto.GitUserDto;
-import uni.umons.ratingwebapp.domain.dto.RateDto;
-import uni.umons.ratingwebapp.domain.dto.UserDto;
+import uni.umons.ratingwebapp.domain.*;
+import uni.umons.ratingwebapp.domain.dto.*;
 import uni.umons.ratingwebapp.repository.*;
 import uni.umons.ratingwebapp.security.SecurityUtil;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @Service("services")
@@ -96,4 +93,70 @@ public class DataServices {
 		return EntityMappers.RatesToRatesDto(rateRepository.findAllByRater(userRepository.findByUsername(SecurityUtil.getCurrentUser().getUsername())));
 	}
 
+	@Transactional
+	public List<RateDto> getAllRates(){
+		return EntityMappers.RatesToRatesDto(rateRepository.findAll());
+	}
+
+	private Stats findstat(Long id,List<Stats> stats)
+	{
+		for(Stats stat : stats)
+		{
+			if(stat.getUserId().equals(Integer.parseInt(id.toString())))
+			{
+				return stat;
+			}
+		}
+		return null;
+	}
+
+	private String getName(Integer id,List<User> users){
+		for(User user : users){
+			if(user.getUserId().equals(Long.parseLong(id.toString())))
+			{
+				return user.getFirstName() + " " + user.getLastName();
+			}
+		}
+		return "";
+	}
+
+	@Transactional
+	public HomePageStats getRatesStats(){
+		HomePageStats homeStats = new HomePageStats();
+
+		List<User> users = userRepository.findAll();
+		List<Stats> stats = rateRepository.getStats();
+		List<BotStats> botStats = rateRepository.getBotStats();
+		List<TimeSeriesStats> lastMonthStats = rateRepository.getUserTimely();
+
+		List<UserStatisticDto> userStat = new ArrayList<>();
+		for(int i=0;i<users.size();i++)
+		{
+			UserStatisticDto userStatistic = new UserStatisticDto();
+			userStatistic.setName(users.get(i).getFirstName()+ " " +users.get(i).getLastName());
+			userStatistic.setStats(findstat(users.get(i).getUserId(),stats));
+			userStat.add(userStatistic);
+		}
+
+		for(int i=0;i<lastMonthStats.size();i++)
+		{
+			lastMonthStats.get(i).setName(getName(lastMonthStats.get(i).getUserId(),users));
+		}
+
+
+		homeStats.setUserStats(userStat);
+		homeStats.setBotStats(botStats);
+		homeStats.setLastMonthStats(lastMonthStats);
+
+		return homeStats ;
+	}
+
+//	@Transactional
+//	private xxx getStatistics()
+//	{
+//		List<RateDto> rates = new ArrayList<>();
+//		for(RateDto rate : rates){
+//			rate.
+//		}
+//	}
 }

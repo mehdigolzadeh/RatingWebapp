@@ -24,10 +24,11 @@
           </section>
           <!-- Main content -->
           <!-- Main content -->
-          <section class="ratesec fixedElement" id="ContentSec">
+
+          <section class="ratesec" id="ContentSec" style="min-height: 95px;">
             <!-- Small boxes (Stat box) -->
-            <div class="row " id="usersList">
-              <section class="col-lg-12">
+            <div class="row fixedElement" id="usersList">
+              <section class="col-lg-12" >
                 <div class="box box-solid">
                     <div class="box-body">
                       <div class="row no-margin">
@@ -105,7 +106,6 @@
           </section>
 
 
-
         <div class="row row-content" id="list">
         </div>
         <div class="row loadmoresec" id="loadmoresec">
@@ -137,17 +137,20 @@
 
       $("input[name='rate-group']").click(function(){
         ratevalue = $("input[name='rate-group']:checked").val();
-        ratingdiff.slideDown(500);
+        $("input[name='diff-group']").prop("checked", false);
+        $('.commentsec').val("");
+
+        ratingdiff.slideDown(10);
         if($("input[value='3']:checked").val())
         {
-          submitsection.slideDown(500);
+          submitsection.slideDown(50);
         }else{
-          submitsection.slideUp(500);
+          submitsection.slideUp(50);
         }
       });
       $("input[name='diff-group']").click(function(){
         ratediff = $("input[name='diff-group']:checked").val();
-        submitsection.slideDown(500);
+        submitsection.slideDown(50);
       });
 
 
@@ -176,7 +179,7 @@
               $( ".submitbutton" ).removeClass( "onclic" );
               $( ".submitbutton" ).addClass( "validate");
               setTimeout(
-                      loadNewUser,1000
+                      loadNewUser,500
               )
             }else if (data.toString() == "NOK")
             {
@@ -196,6 +199,9 @@
       var data;
       var Alldata;
       function loadNewUser() {
+        ratediff = 0;
+        ratedesc= "";
+        ratevalue =0;
         $('.submitbutton').click(submitaction);
         $( ".submitbutton" ).removeClass( "onclic" );
         $( ".submitbutton" ).removeClass( "validate" );
@@ -280,10 +286,10 @@
       var $el = $('.fixedElement');
       var isPositionFixed = ($el.css('position') == 'fixed');
       if ($(this).scrollTop() > 200 && !isPositionFixed){
-        $el.css({'position': 'fixed', 'top': '0px','left':'0px'});
+        $el.css({'position': 'fixed', 'top': '0px','left':'0px','width':'103%'});
       }
       if ($(this).scrollTop() < 200 && isPositionFixed){
-        $el.css({'position': 'static', 'top': '0px'});
+        $el.css({'position': 'static', 'top': '0px','width':''});
       }
     });
 

@@ -5828,8 +5828,8 @@ table.text-center th {
     }
 
 .connectedSortable {
-    min-height: 100px;
-    height: 11em;
+    min-height: 11em;
+    /*height: 11em;*/
 }
 
 .connectedLoadMore {
@@ -6683,7 +6683,6 @@ table.dataTable thead .sorting:after {
 
 .fixedElement {
     z-index:100;
-    width: 100%;
 }
 
 

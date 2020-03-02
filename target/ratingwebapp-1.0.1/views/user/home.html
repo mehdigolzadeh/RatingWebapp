@@ -8,24 +8,487 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" th:src="@{/webjars/jquery/1.11.3/jquery.min.js}"></script>
   <script src="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/3.3.4/js/bootstrap.min.js}"></script>
   <script src="../../js/ratingapp.js" th:src="@{/js/ratingapp.js}"></script>
-  <script src="../../resources/metisMenu/dist/metisMenu.min.js" th:src="@{/resources/metisMenu/dist/metisMenu.min.js}"></script>
+  <script src="../../js/moment.min.js" th:src="@{/js/moment.min.js}"></script>
+  <script src="../../js/Chart.min.js" th:src="@{/js/Chart.min.js}"></script>
+
   <link rel="stylesheet" type="text/css" media="screen" href="../../css/common.css" th:href="@{/css/common.css}" />
   <link rel="stylesheet" type="text/css" media="screen" href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}" />
-  <link rel="stylesheet" type="text/css" media="screen" href="../../resources/metisMenu/dist/metisMenu.css" th:href="@{/resources/metisMenu/dist/metisMenu.min.css}" />
+
   <link rel="stylesheet" type="text/css" media="screen" href="../../resources/font-awesome/css/font-awesome.min.css" th:href="@{/resources/font-awesome/css/font-awesome.min.css}" />
   <link rel="stylesheet" type="text/css" media="screen" href="../../css/ratingapp.css" th:href="@{/css/ratingapp.css}" />
 </head>
 <body>
 <div id="page-wrapper" layout:fragment="content">
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-12">
-        <h3 class="page-header">Home</h3>
+
+<!--    <div class="row">-->
+<!--      <div class="col-lg-12">-->
+<!--        <h3 class="page-header">Home</h3>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; /.col-lg-12 &ndash;&gt;-->
+<!--    </div>-->
+
+    <div class="row" style="margin-top: 30px">
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-gray">
+          <div class="inner">
+            <h3 class="TotalAccounts">20000</h3>
+            <p class="persian-text">Total accounts</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-ios-search"></i>
+          </div>
+          <a href="#" class="small-box-footer"><span class="persian-text">More info</span> <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
       </div>
-      <!-- /.col-lg-12 -->
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-gray">
+          <div class="inner">
+            <h3 class="totalRated">1531</h3>
+            <p class="persian-text">Fully rated accounts</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-ios-search"></i>
+          </div>
+          <a href="#" class="small-box-footer"><span class="persian-text">More info</span> <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-gray">
+          <div class="inner">
+            <h3 class="halfRated">1531</h3>
+            <p class="persian-text">Half rated accounts</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-ios-search"></i>
+          </div>
+          <a href="#" class="small-box-footer"><span class="persian-text">More info</span> <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-gray">
+          <div class="inner">
+            <h3 class="botVotes">1531</h3>
+            <p class="persian-text">Bots</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-ios-search"></i>
+          </div>
+          <a href="#" class="small-box-footer"><span class="persian-text">More info</span> <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
     </div>
+
+    <div class="row">
+      <section class="col-lg-4 connectedSortable">
+        <div class="box box-solid">
+          <!-- /.box-header -->
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="chart-responsive">
+                  <canvas id='pie-chart1'> </canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="col-lg-4 connectedSortable">
+        <div class="box box-solid">
+          <!-- /.box-header -->
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="chart-responsive">
+                  <canvas id='pie-chart2'> </canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="col-lg-4 connectedSortable">
+        <div class="box box-solid">
+          <!-- /.box-header -->
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="chart-responsive">
+                  <canvas id='pie-chart3'> </canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="row">
+      <section class="col-lg-12 connectedSortable">
+        <div class="box box-solid">
+          <div class="box-header" style="cursor: move;">
+            <i class="fa fa-bar-chart"></i>
+            <h3 class="box-title">Daily Report</h3>
+            <canvas id='daily'> </canvas>
+          </div>
+
+        </div>
+
+      </section>
+    </div>
+
     <!-- /.row -->
   </div>
+  <script>
+    $(document).ready(function () {
+      $.ajax({
+        cache: false,
+        type: "POST",
+        async: false,
+        url: "../user/getStats",
+        success: function (res) {
+          debugger;
+          if(res.toString().indexOf("/sign-in-process.html")>=0)
+          {
+            window.location.href = '../signin';
+          }
+
+          var fullRated = 0;
+          var halfRated = 0;
+          var humanVotes = 0;
+          var botVotes = 0;
+          var idkVotes = 0;
+
+          var names = [];
+          var totalRate = [];
+          var humanRate = [];
+          var botRate=[];
+          var idkRate = [];
+          var veryEasyRate = [];
+          var easyRate = [];
+          var difficultRate = [];
+          var veryDifficultRate = [];
+          var noDifficulty = [];
+
+
+          for(var i = 0;i<res.userStats.length;i++)
+          {
+            names.push(res.userStats[i].name);
+            if(res.userStats[i].stats != null) {
+              totalRate.push(res.userStats[i].stats.totalRate);
+              humanRate.push(res.userStats[i].stats.humanRate);
+              botRate.push(res.userStats[i].stats.botRate);
+              idkRate.push(res.userStats[i].stats.idkRate);
+              veryEasyRate.push(res.userStats[i].stats.veryEasyRate);
+              easyRate.push(res.userStats[i].stats.easyRate);
+              difficultRate.push(res.userStats[i].stats.difficultRate);
+              veryDifficultRate.push(res.userStats[i].stats.veryDifficultRate);
+              noDifficulty.push(res.userStats[i].stats.noDifficulty);
+            }else{
+              totalRate.push(0);
+              humanRate.push(0);
+              botRate.push(0);
+              idkRate.push(0);
+              veryEasyRate.push(0);
+              easyRate.push(0);
+              difficultRate.push(0);
+              veryDifficultRate.push(0);
+              noDifficulty.push(0);
+            }
+          }
+
+          for(i =0;i<res.botStats.length;i++){
+            var thisItem = res.botStats[i];
+            if(thisItem.totalRate == 2){
+              fullRated++;
+            }else if(thisItem.totalRate == 1){
+              halfRated++;
+            }
+
+            if(thisItem.humanRate == 2){
+              humanVotes++;
+            }
+            if(thisItem.botRate == 2){
+              botVotes++;
+            }
+            if(thisItem.idkRate == 2){
+              idkVotes++;
+            }
+          }
+
+          $(".totalRated").html(fullRated);
+          $(".halfRated").html(halfRated);
+          $(".botVotes").html(botVotes);
+
+          config1.data = {
+            datasets: [{
+              data: [
+                      humanVotes,botVotes,idkVotes
+              ],
+              backgroundColor: [
+                window.chartColors.red,
+                window.chartColors.orange,
+                window.chartColors.yellow,
+                window.chartColors.green,
+                window.chartColors.blue,
+              ],
+              label: 'Rates'
+            }],
+            labels: ['Human','Bot','IDK']
+          }
+
+          var ctx1 = document.getElementById('pie-chart1').getContext('2d');
+          window.myDoughnut = new Chart(ctx1, config1);
+
+          // var ctx2 = document.getElementById('pie-chart2').getContext('2d');
+          // window.myDoughnut = new Chart(ctx2, config2);
+          //
+          // var ctx3 = document.getElementById('pie-chart3').getContext('2d');
+          // window.myDoughnut = new Chart(ctx3, config3);
+
+          var barChartData = {
+            labels: names,
+            datasets: [{
+              label: 'Human',
+              backgroundColor: window.chartColors.red,
+              data: humanRate
+            }, {
+              label: 'Bot',
+              backgroundColor: window.chartColors.blue,
+              data: botRate
+            }, {
+              label: 'IDK',
+              backgroundColor: window.chartColors.green,
+              data: idkRate
+            }]
+
+          };
+
+          var ctx = document.getElementById('pie-chart2').getContext('2d');
+          window.myBar = new Chart(ctx, {
+            type: 'bar',
+            data: barChartData,
+            options: {
+              title: {
+                display: true,
+                text: "User's rates"
+              },
+              tooltips: {
+                mode: 'index',
+                intersect: false
+              },
+              responsive: true,
+              scales: {
+                xAxes: [{
+                  stacked: true,
+                }],
+                yAxes: [{
+                  stacked: true
+                }]
+              }
+            }
+          });
+
+
+
+          var barChartData1 = {
+            labels: names,
+            datasets: [{
+              label: 'Very Easy',
+              backgroundColor: window.chartColors.red,
+              data: veryEasyRate
+            }, {
+              label: 'Easy',
+              backgroundColor: window.chartColors.blue,
+              data: easyRate
+            }, {
+              label: 'Difficult',
+              backgroundColor: window.chartColors.green,
+              data: difficultRate
+            }, {
+              label: 'Very difficult',
+              backgroundColor: window.chartColors.grey,
+              data: veryDifficultRate
+            }, {
+              label: 'Not selected',
+              backgroundColor: window.chartColors.yellow,
+              data: noDifficulty
+            }]
+
+          };
+
+          var ctx = document.getElementById('pie-chart3').getContext('2d');
+          window.myBar = new Chart(ctx, {
+            type: 'bar',
+            data: barChartData1,
+            options: {
+              title: {
+                display: true,
+                text: 'Rate difficultiesً'
+              },
+              tooltips: {
+                mode: 'index',
+                intersect: false
+              },
+              responsive: true,
+              scales: {
+                xAxes: [{
+                  stacked: true,
+                }],
+                yAxes: [{
+                  stacked: true
+                }]
+              }
+            }
+          });
+
+
+          debugger;
+          colors = [window.chartColors.red,window.chartColors.orange,window.chartColors.blue,window.chartColors.yellow,window.chartColors.gray,window.chartColors.purple,window.chartColors.green];
+          c = 0;
+          userslist = [];
+          usersdates = [];
+          usersMonthly = [];
+          monthly = [];
+          for(i = 0;i<res.lastMonthStats.length;i++)
+          {
+            itemv = res.lastMonthStats[i];
+            if(usersdates.indexOf(itemv.ratedAt) == -1)
+            {
+              usersdates.push(itemv.ratedAt);
+            }
+            if(userslist.indexOf(itemv.name) == -1)
+            {
+              userslist.push(itemv.name);
+              usersMonthly.push( {
+                label: itemv.name,
+                fill: false,
+                backgroundColor: colors[c],
+                borderColor: colors[c++],
+                dates: [],
+                data: []
+              });
+
+            }
+            monthly.push({
+              label: itemv.name,
+              x: itemv.ratedAt,
+              y: itemv.total
+            })
+          }
+
+          for(i = 0;i<usersMonthly.length;i++)
+          {
+
+            for(j = 0;j<monthly.length;j++) {
+              if(monthly[j].label  == usersMonthly[i].label){
+                var itemtobeadded = monthly[j];
+                delete itemtobeadded.label;
+                usersMonthly[i].data.push(itemtobeadded);
+                usersMonthly[i].dates.push(itemtobeadded.x)
+              }
+            }
+
+            for (t = 0; t < usersdates.length; t++) {
+                if (usersMonthly[i].dates.indexOf(usersdates[t]) == -1)
+                {
+                  usersMonthly[i].data.splice(t,0,{
+                    x: usersdates[t],
+                    y: 0
+                  })
+                }
+            }
+          }
+
+          var configdaily = {
+            type: 'line',
+            data: {
+              datasets: usersMonthly
+            },
+            options: {
+              responsive: true,
+              title: {
+                display: true,
+                text: 'Last Month'
+              },
+              scales: {
+                xAxes: [{
+                  type: 'time',
+                  display: true,
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Date'
+                  },
+                  ticks: {
+                    major: {
+                      fontStyle: 'bold',
+                      fontColor: '#FF0000'
+                    }
+                  }
+                }],
+                yAxes: [{
+                  display: true,
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'value'
+                  }
+                }]
+              }
+            }
+          };
+
+          var ctxdaily = document.getElementById('daily').getContext('2d');
+          window.myLine = new Chart(ctxdaily, configdaily);
+
+        },
+        Error: function (e) {
+          alert(e);
+        }
+      });
+
+    });
+
+    window.chartColors = {
+      red: 'rgb(255, 99, 132)',
+      orange: 'rgb(255, 159, 64)',
+      yellow: 'rgb(255, 205, 86)',
+      green: 'rgb(75, 192, 192)',
+      blue: 'rgb(54, 162, 235)',
+      purple: 'rgb(153, 102, 255)',
+      grey: 'rgb(201, 203, 207)'
+    };
+
+
+    var config1 = {
+      type: 'doughnut',
+      options: {
+        circumference: Math.PI,
+        rotation: -Math.PI,
+        responsive: true,
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Results'
+        },
+        animation: {
+          animateScale: true,
+          animateRotate: true
+        },
+
+      }
+    };
+
+
+
+  </script>
 </div>
 </body>
 </html>

@@ -7,10 +7,8 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" th:src="@{/webjars/jquery/1.11.3/jquery.min.js}"></script>
   <script src="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/3.3.4/js/bootstrap.min.js}"></script>
   <script src="../../js/ratingapp.js" th:src="@{/js/ratingapp.js}"></script>
-  <script src="../../resources/metisMenu/dist/metisMenu.min.js" th:src="@{/resources/metisMenu/dist/metisMenu.min.js}"></script>
   <link rel="stylesheet" type="text/css" media="screen" href="../../css/common.css" th:href="@{/css/common.css}" />
   <link rel="stylesheet" type="text/css" media="screen" href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}" />
-  <link rel="stylesheet" type="text/css" media="screen" href="../../resources/metisMenu/dist/metisMenu.css" th:href="@{/resources/metisMenu/dist/metisMenu.min.css}" />
   <link rel="stylesheet" type="text/css" media="screen" href="../../resources/font-awesome/css/font-awesome.min.css" th:href="@{/resources/font-awesome/css/font-awesome.min.css}" />
   <link rel="stylesheet" type="text/css" media="screen" href="../../css/ratingapp.css" th:href="@{/css/ratingapp.css}" />
 
@@ -26,10 +24,11 @@
           </section>
           <!-- Main content -->
           <!-- Main content -->
-          <section class="ratesec fixedElement" id="ContentSec">
+
+          <section class="ratesec" id="ContentSec" style="min-height: 95px;">
             <!-- Small boxes (Stat box) -->
-            <div class="row " id="usersList">
-              <section class="col-lg-12">
+            <div class="row fixedElement" id="usersList">
+              <section class="col-lg-12" >
                 <div class="box box-solid">
                     <div class="box-body">
                       <div class="row no-margin">
@@ -37,17 +36,17 @@
                           <div class="btns btnsrate">
                             <label>
                               <input name="rate-group" type="radio" value="1">
-                              <span class="btn first">Human</span>
+                              <span class="btn first" style="padding: 0px;">Human</span>
 
                             </label>
                             <label class="lablemidrate">
                               <input name="rate-group" type="radio" value="2">
-                              <span class="btn">Bot</span>
+                              <span class="btn" style="padding: 0px;">Bot</span>
 
                             </label>
                             <label>
                               <input name="rate-group" type="radio" value="3">
-                              <span class="btn last">I dont Know</span>
+                              <span class="btn last" style="padding: 0px;">I dont Know</span>
 
                             </label>
                           </div>
@@ -59,22 +58,22 @@
                           <div class="btns">
                             <label>
                               <input name='diff-group' type='radio' value='1'>
-                              <span class='btn first'>Very easy</span>
+                              <span class='btn rdif first' style="padding: 0px;">Very easy</span>
                               </input>
                             </label>
                             <label class="lablemid">
                               <input name='diff-group' type='radio' value='2'>
-                              <span class='btn'>Easy</span>
+                              <span class='btn rdif' style="padding: 0px;">Easy</span>
                               </input>
                             </label>
                             <label class="lablemid">
                               <input name='diff-group' type='radio' value='3'>
-                              <span class='btn'>Difficult</span>
+                              <span class='btn rdif' style="padding: 0px;">Difficult</span>
                               </input>
                             </label>
                             <label>
                               <input name='diff-group' type='radio' value='4'>
-                              <span class='btn last'>Very difficult</span>
+                              <span class='btn rdif last' style="padding: 0px;">Very difficult</span>
                               </input>
                             </label>
                           </div>
@@ -105,7 +104,6 @@
 
             </div>
           </section>
-
 
 
         <div class="row row-content" id="list">
@@ -139,17 +137,20 @@
 
       $("input[name='rate-group']").click(function(){
         ratevalue = $("input[name='rate-group']:checked").val();
-        ratingdiff.slideDown(500);
+        $("input[name='diff-group']").prop("checked", false);
+        $('.commentsec').val("");
+
+        ratingdiff.slideDown(10);
         if($("input[value='3']:checked").val())
         {
-          submitsection.slideDown(500);
+          submitsection.slideDown(50);
         }else{
-          submitsection.slideUp(500);
+          submitsection.slideUp(50);
         }
       });
       $("input[name='diff-group']").click(function(){
         ratediff = $("input[name='diff-group']:checked").val();
-        submitsection.slideDown(500);
+        submitsection.slideDown(50);
       });
 
 
@@ -172,13 +173,13 @@
             debugger;
             if(data.toString().indexOf("/sign-in-process.html")>=0)
             {
-              window.location.href = '/signin';
+              window.location.href = '../signin';
             }else if (data.toString() == "OK")
             {
               $( ".submitbutton" ).removeClass( "onclic" );
               $( ".submitbutton" ).addClass( "validate");
               setTimeout(
-                      loadNewUser,1000
+                      loadNewUser,500
               )
             }else if (data.toString() == "NOK")
             {
@@ -195,16 +196,12 @@
         });
       }
 
-
-      // function validate() {
-      //   setTimeout(function() {
-      //
-      //   }, 2250 );
-      // }
-
       var data;
       var Alldata;
       function loadNewUser() {
+        ratediff = 0;
+        ratedesc= "";
+        ratevalue =0;
         $('.submitbutton').click(submitaction);
         $( ".submitbutton" ).removeClass( "onclic" );
         $( ".submitbutton" ).removeClass( "validate" );
@@ -223,6 +220,10 @@
           success: function (res) {
             data = res;
             Alldata = data;
+            if(data.toString().indexOf("/sign-in-process.html")>=0)
+            {
+              window.location.href = '../signin';
+            }
             createTable();
           },
           Error: function (e) {
@@ -246,7 +247,7 @@
           }
         }else{
           for (var i = 0; i < 20 ; i++) {
-            createItem(i, data[i].id,data[i]["body"],tableDiv)
+            createItem(i, data[i].id,escape(data[i]["body"]),tableDiv)
           }
           var foot = $('.loadmoresec');
           var tbl = $('<div />').addClass('col-lg-12').addClass('col-xs-12').addClass('col-xl-12').addClass('connectedLoadMore').appendTo(foot);
@@ -274,25 +275,8 @@
 
         var prbbox = $('<div />').addClass('entity-prop-box').addClass('bg-white').appendTo(tbl);
         var inner = $('<div />').addClass('inner').appendTo(prbbox);
-        // var footer = ($('<div />')
-        //         .addClass('entity-prop-box-footer-box')
-        //         .html((perm?'<a href="'+path+'/authorities/editAuthorityGroup/'+data[i].group.id+'" class="entity-prop-box-footer btn-cagroup pull-left" style="color:#a76c00">' + data[i]['group']['name']+'</a>':
-        //                 '<div class="entity-prop-box-footer btn-cagroup pull-left" style="color:#a76c00">'+data[i]['group']['name']+'</div>')+'<a href="#" class="entity-prop-box-footer delete-btn">Delete  <i class="fa fa-trash-o"></i></a><a href= "#" class="entity-prop-box-footer edit-btn"> Edit <i class="fa fa-pencil-square-o" ></i></a><a href= "#" class="entity-prop-box-footer detail-btn"> Detail <i class="fa fa-info-circle" ></i></a><a href= "#" class="entity-prop-box-footer revoke-btn"> Revoke <i class="fa fa-close" ></i></a>')).appendTo(prbbox);
-        // if(data[i].responder == null)
-        // {
-        //   footer.css('background',"#ffebcd");
-        // }
-        // if(data[i].active !== true)
-        // {
-        //   footer.css('background','#dedce8');
-        // }
-        // if(data[i].status == 1)
-        // {
-        //   footer.css('background','#ffdede');
-        //   footer.find($('.revoke-btn')).remove();
-        //   footer.find($('.edit-btn')).remove();
-        // }
-        inner.append($('<p />').html(text));
+
+        inner.append($('<p />').html($.parseHTML( unescape(text) )));
         tbl.hide().delay(i * (20 - (i < 20 ? i : 19))).fadeIn(500).appendTo(tbl);
       }
 
@@ -302,10 +286,10 @@
       var $el = $('.fixedElement');
       var isPositionFixed = ($el.css('position') == 'fixed');
       if ($(this).scrollTop() > 200 && !isPositionFixed){
-        $el.css({'position': 'fixed', 'top': '0px','left':'0px'});
+        $el.css({'position': 'fixed', 'top': '0px','left':'0px','width':'103%'});
       }
       if ($(this).scrollTop() < 200 && isPositionFixed){
-        $el.css({'position': 'static', 'top': '0px'});
+        $el.css({'position': 'static', 'top': '0px','width':''});
       }
     });
 

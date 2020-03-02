@@ -14,7 +14,9 @@ import uni.umons.ratingwebapp.domain.GitUser;
 import uni.umons.ratingwebapp.domain.Rate;
 import uni.umons.ratingwebapp.domain.User;
 import uni.umons.ratingwebapp.domain.dto.GitUserDto;
+import uni.umons.ratingwebapp.domain.dto.HomePageStats;
 import uni.umons.ratingwebapp.domain.dto.RateDto;
+import uni.umons.ratingwebapp.domain.dto.UserStatisticDto;
 import uni.umons.ratingwebapp.security.SecurityUtil;
 import uni.umons.ratingwebapp.service.DataServices;
 
@@ -75,7 +77,7 @@ public class UserController {
 										   @RequestParam String rateDescription, HttpServletResponse response) {
 		try {
 			Rate raterecord = dataServices.getLastIncompleteRate();
-			if(gitUserId != raterecord.getGitUserId())
+			if(! gitUserId.equals(raterecord.getGitUserId()))
 			{
 				response.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
 				return "User has modified data manually";
@@ -100,5 +102,15 @@ public class UserController {
 	List<RateDto> GivemeUserRates()
 	{
 		return dataServices.getUserRates();
+	}
+
+
+	@PreAuthorize("hasRole('User') or hasRole('Administrator')")
+	@RequestMapping(value = "getStats" , method = RequestMethod.POST
+			,produces = "application/json")
+	public @ResponseBody
+	HomePageStats GetStats()
+	{
+		return dataServices.getRatesStats();
 	}
 }
