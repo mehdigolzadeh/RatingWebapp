@@ -243,23 +243,25 @@
         data = data["comments"];
         if(data.length < 20) {
           for (var i = 0; i < data.length; i++) {
-            createItem(i, data[i].id,data[i]["body"],tableDiv)
+            createItem(i, data[i].id,data[i]["body"],data[i]["issueType"],tableDiv)
           }
         }else{
           for (var i = 0; i < 20 ; i++) {
-            createItem(i, data[i].id,escape(data[i]["body"]),tableDiv)
+            createItem(i, data[i].id,escape(data[i]["body"]),data[i]["issueType"],tableDiv)
           }
           var foot = $('.loadmoresec');
           var tbl = $('<div />').addClass('col-lg-12').addClass('col-xs-12').addClass('col-xl-12').addClass('connectedLoadMore').appendTo(foot);
           var prbbox = $('<div />').addClass('entity-prop-box').addClass('bg-white').appendTo(tbl);
           var inner = $('<div />').addClass('loadmore').html('<a href="#" class="entity-prop-box-footer load-more" style="margin-left: 7px"> Load More <i class="fa fa-plus"></i></a>');
+
+
           prbbox.append(inner);
 
           $('.entity-prop-box-footer.load-more').click(function (e) {
             e.preventDefault();
 
             for (var i = 20; i < data.length ; i++) {
-              createItem(i, data[i].id,escape(data[i]["body"]),tableDiv)
+              createItem(i, data[i].id,escape(data[i]["body"]),data[i]["issueType"],tableDiv)
             }
 
             $('.connectedLoadMore').fadeOut(500);
@@ -269,13 +271,17 @@
         }
       }
 
-      function createItem(i, index , text , table_div){
+      function createItem(i, index , text, itemtype , table_div){
 
         var tbl = $('<div />').attr("listId", i).attr("id", index).addClass('col-lg-4').addClass('col-sm-6').addClass('col-xs-12').addClass('col-xl-3').addClass('connectedSortable').appendTo(table_div);
 
         var prbbox = $('<div />').addClass('entity-prop-box').addClass('bg-white').appendTo(tbl);
         var inner = $('<div />').addClass('inner').appendTo(prbbox);
-
+        if(itemtype == "1") {
+          ($('<div />').addClass('entity-prop-box-footer-box')).appendTo(prbbox);
+        }else{
+          ($('<div />').addClass('entity-prop-box-footer-box-issue')).appendTo(prbbox);
+        }
         inner.append($('<p />').html($.parseHTML( unescape(text) )));
         tbl.hide().delay(i * (20 - (i < 20 ? i : 19))).fadeIn(500).appendTo(tbl);
       }

@@ -36,6 +36,7 @@ public class EntityMappers {
         CommentDto commentDto = new CommentDto();
         commentDto.setAuthor(comment.getGitUser().getName());
         commentDto.setId(comment.getId());
+        commentDto.setIssueType(comment.getIssueType());
         commentDto.setCreatedAt(comment.getCreatedAt());
         commentDto.setBody(comment.getBody());
         return commentDto;

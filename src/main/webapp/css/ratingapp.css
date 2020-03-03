@@ -5992,14 +5992,25 @@ table.text-center th {
         width: 49%;
     }
 
+    .entity-prop-box > .entity-prop-box-footer-box-issue {
+        position: relative;
+        text-align: right;
+        padding: 3px 3px;
+        display: block;
+        z-index: 10;
+        min-height: 3px;
+        background: rgba(208, 84, 84, 0.3);
+        text-decoration: none;
+    }
+
     .entity-prop-box > .entity-prop-box-footer-box {
         position: relative;
         text-align: right;
-        padding: 5px 5px;
+        padding: 3px 3px;
         display: block;
         z-index: 10;
-        min-height: 40px;
-        background: rgba(84, 183, 208, 0.12);
+        min-height: 3px;
+        background: rgba(84, 84, 208, 0.3);
         text-decoration: none;
     }
 
@@ -6027,7 +6038,7 @@ table.text-center th {
         font: 400 20px/1.5 Lato, "Helvetica Neue", Helvetica, arial, sans-serif;
         font-size: 14px;
         margin: 0px;
-        overflow: scroll;
+        overflow: auto;
         height: 8em;
     }
 

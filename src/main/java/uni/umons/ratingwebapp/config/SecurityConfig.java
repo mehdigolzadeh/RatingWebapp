@@ -12,10 +12,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import uni.umons.ratingwebapp.security.LoggingAccessDeniedHandler;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
+import javax.sql.DataSource;
 import java.util.EnumSet;
 
 
@@ -24,7 +30,10 @@ import java.util.EnumSet;
 @EnableWebMvcSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
+	@Autowired
+	private DataSource dataSource;
+
 	@Autowired
 	@Qualifier("customUserDetailsService")
 	private UserDetailsService customUserDetailsService;
@@ -37,13 +46,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 
 
+		httpSecurity.rememberMe().rememberMeServices(rememberMeServices()).key("posc").and();
 		httpSecurity.csrf().disable();
 		httpSecurity.headers().frameOptions().disable();
 		
 		// static resources
 		httpSecurity.authorizeRequests()
 		.antMatchers("/css/**", "/js/**", "/images/**", "/resources/**", "/webjars/**").permitAll();
-		
+
 		httpSecurity.authorizeRequests()
 						.antMatchers("/signin").anonymous()
 						.anyRequest()
@@ -79,5 +89,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        registration.setFilter(springSecurityFilterChain);
 	        registration.setDispatcherTypes(EnumSet.allOf(DispatcherType.class));
 	        return registration;
+	}
+
+	@Bean
+	public PersistentTokenRepository persistentTokenRepository() {
+		JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
+		db.setDataSource(dataSource);
+		return db;
+	}
+
+	@Bean
+	public AbstractRememberMeServices rememberMeServices() {
+		PersistentTokenBasedRememberMeServices rememberMeServices =
+				new PersistentTokenBasedRememberMeServices("posc",customUserDetailsService,persistentTokenRepository());
+		rememberMeServices.setAlwaysRemember(true);
+		return rememberMeServices;
 	}
 }
